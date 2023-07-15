@@ -70,6 +70,7 @@ task cleanAll {
 }
 
 task publishAll {
+    dependsOn(":common:publish")
     dependsOn(":fabric:publish")
     dependsOn(":forge:publish")
 }
@@ -130,8 +131,10 @@ curseforge {
             releaseType = 'release'
         }
         relations {
-            "${project.curse_dep_fabric}".split(', ').each {
-                requiredDependency "${it}"
+            if (!"${project.curse_dep_fabric}".isEmpty()) {
+                "${project.curse_dep_fabric}".split(', ').each {
+                    requiredDependency "${it}"
+                }
             }
             if(project.hasProperty("optional_curse_dep_fabric")) {
                 "${project.optional_curse_dep_fabric}".split(', ').each {
@@ -184,13 +187,13 @@ def discordNotif(fabric, forge) {
             def fileIDFabric = tasks.getByName("curseforge${project.curse_id_fabric}").property('mainArtifact').fileID
             embed.addField('Get the fabric version here (When it is accepted)', "${project.findProperty('curse_page_fabric')}/files/${fileIDFabric}", false)
             fileIDFabric = project("fabric").tasks.getByName("modrinth").property('uploadInfo').id
-            embed.addField('Modrinth version', "${project.findProperty('modrinth_page')}/version/${fileIDFabric}", false)
+            embed.addField('Modrinth version (fabric)', "${project.findProperty('modrinth_page')}/version/${fileIDFabric}", false)
         }
         if(forge) {
             def fileIDForge = tasks.getByName("curseforge${project.curse_id_forge}").property('mainArtifact').fileID
             embed.addField('Get the forge version here (When it is accepted)', "${project.findProperty('curse_page_forge')}/files/${fileIDForge}", false)
             fileIDForge = project("forge").tasks.getByName("modrinth").property('uploadInfo').id
-            embed.addField('Modrinth version', "${project.findProperty('modrinth_page')}/version/${fileIDForge}", false)
+            embed.addField('Modrinth version (forge)', "${project.findProperty('modrinth_page')}/version/${fileIDForge}", false)
         }
         def changelog = discordChangelog()
         if (changelog.size() == 1)
