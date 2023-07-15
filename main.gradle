@@ -76,7 +76,7 @@ task publishAll {
     dependsOn(":forge:publish")
 }
 
-def changelog(int versions) {
+ext.changelog = { int versions ->
     try {
         def changelog = ""
         def match = 0
