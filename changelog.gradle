@@ -1,4 +1,4 @@
-def changelog (int version) {
+ext.changelog { int version -> 
     try {
         def changelog = ""
         def match = 0

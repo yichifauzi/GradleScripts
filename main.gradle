@@ -79,7 +79,7 @@ task publishAll {
 
 //Splits the changelog into multiple parts if they get bigger than discords embed field size (1024)
 def discordChangelog() {
-    def changelog = changelog(1)
+    def changelog = ext.changelog(1)
     def res = new ArrayList()
     if (changelog.size() < 1024) {
         res.add(changelog)
@@ -108,7 +108,7 @@ curseforge {
         }
         addGameVersion "Fabric"
         mainArtifact(project(":fabric").tasks.getByName('remapJar')) {
-            def txt = changelog(1).replace("\n-", "\n\n- ")
+            def txt = ext.changelog(1).replace("\n-", "\n\n- ")
             txt = txt + "\n\n" + "For past versions see: ${project.full_changelog}"
             changelog = txt
             changelogType = "markdown"
@@ -134,7 +134,7 @@ curseforge {
         }
         addGameVersion "Forge"
         mainArtifact(project(":forge").tasks.getByName('remapJar')) {
-            def txt = changelog(1).replace("\n-", "\n\n- ")
+            def txt = ext.changelog(1).replace("\n-", "\n\n- ")
             txt = txt + "\n\n" + "For past versions see: ${project.full_changelog}"
             changelog = txt
             changelogType = "markdown"
