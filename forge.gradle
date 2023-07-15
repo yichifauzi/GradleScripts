@@ -92,7 +92,7 @@ modrinth {
     projectId = "${modrinth_id}"
     versionNumber = version
     versionName = remapJar.archiveFileName
-    changelog = rootProject.changelog(1) + "\n\n" + "For past versions see: ${project.full_changelog}"
+    changelog = ext.changelog(1) + "\n\n" + "For past versions see: ${project.full_changelog}"
     versionType = "release"
     uploadFile = remapJar
     gameVersions = "${project.modrinth_versions}".split(', ').toList()
