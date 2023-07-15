@@ -19,6 +19,7 @@ buildscript {
     }
 }
 
+apply plugin: org.jetbrains.gradle.ext.IdeaExtPlugin
 apply plugin: dev.architectury.plugin.ArchitecturyPlugin
 apply plugin: com.matthewprenger.cursegradle.CurseGradlePlugin
 
