@@ -11,6 +11,7 @@ buildscript {
 
 apply plugin: com.modrinth.minotaur.Minotaur
 apply plugin: com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
+apply from: "https://raw.githubusercontent.com/Flemmli97/GradleScripts/mc-architectury-1.2/changelog.gradle"
 
 architectury {
     platformSetupLoomIde()
@@ -88,7 +89,7 @@ modrinth {
     projectId = "${modrinth_id}"
     versionNumber = version
     versionName = remapJar.archiveFileName
-    changelog = ext.changelog(1) + "\n\n" + "For past versions see: ${project.full_changelog}"
+    changelog = changelog(1) + "\n\n" + "For past versions see: ${project.full_changelog}"
     versionType = "release"
     uploadFile = remapJar
     gameVersions = "${project.modrinth_versions}".split(', ').toList()

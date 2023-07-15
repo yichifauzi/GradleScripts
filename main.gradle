@@ -9,6 +9,7 @@ buildscript {
     }
 }
 
+apply from: "https://raw.githubusercontent.com/Flemmli97/GradleScripts/mc-architectury-1.2/changelog.gradle"
 apply plugin: com.matthewprenger.cursegradle.CurseGradlePlugin
 
 import com.diluv.schoomp.Webhook
@@ -74,24 +75,6 @@ task publishAll {
     dependsOn(":common:publish")
     dependsOn(":fabric:publish")
     dependsOn(":forge:publish")
-}
-
-ext.changelog = { int versions ->
-    try {
-        def changelog = ""
-        def match = 0
-        file("Changelog.md").eachLine {
-            if (it.matches("${project.project_name} [0-9]\\.[0-9]+\\.[0-9]+(\\.[0-9]*)?"))
-                match++
-            if (match <= versions) {
-                changelog += it + "\n"
-            } else
-                return
-        }
-        return changelog + "\n\n"
-    } catch (exception) {
-        return "${project.project_name} ${project.mod_version}\n==========\n"
-    }
 }
 
 //Splits the changelog into multiple parts if they get bigger than discords embed field size (1024)
