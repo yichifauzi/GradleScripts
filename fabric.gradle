@@ -1,5 +1,6 @@
 ext {
     shadow_version = "8.+"
+    shadow_artifact = "shadow"
 }
 
 buildscript {
@@ -8,7 +9,7 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath group: "com.github.johnrengelman", name: "shadow", version: shadow_version
+        classpath group: "com.github.johnrengelman", name: shadow_artifact, version: shadow_version
         classpath "com.modrinth.minotaur:Minotaur:2.+"
     }
 }
