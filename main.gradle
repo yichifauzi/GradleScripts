@@ -2,25 +2,13 @@ buildscript {
     repositories {
         mavenCentral()
         gradlePluginPortal()
-        maven { url "https://maven.fabricmc.net/" }
-        maven { url "https://maven.architectury.dev/" }
-        maven {
-            url = 'https://maven.minecraftforge.net/'
-            content {
-                excludeGroupByRegex "org.eclipse.*"
-            }
-        }
     }
     dependencies {
-        classpath "dev.architectury:architectury-loom:1.2-SNAPSHOT"
-        classpath "architectury-plugin:architectury-plugin.gradle.plugin:3.4-SNAPSHOT"
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
         classpath group: 'com.diluv.schoomp', name: 'Schoomp', version: '1.1.0+'
     }
 }
 
-apply plugin: org.jetbrains.gradle.ext.IdeaExtPlugin
-apply plugin: dev.architectury.plugin.ArchitecturyPlugin
 apply plugin: com.matthewprenger.cursegradle.CurseGradlePlugin
 
 import com.diluv.schoomp.Webhook
