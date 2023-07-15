@@ -10,7 +10,7 @@ buildscript {
 }
 
 apply plugin: com.modrinth.minotaur.Minotaur
-apply plugin: "com.github.johnrengelman.shadow"
+apply plugin: com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 
 architectury {
     platformSetupLoomIde()
@@ -50,6 +50,7 @@ processResources {
         expand "version": project.version, "loader_version": loader_version, "homepage": curse_page_forge, 
                 "mcversion": minecraft_version, "forge_version": forge_version
     }
+    exclude '.cache'
 }
 
 shadowJar {
