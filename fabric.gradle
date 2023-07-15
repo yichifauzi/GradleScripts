@@ -25,6 +25,11 @@ loom {
     }
 }
 
+ext {
+    mod_meta = ["version": project.version, "homepage": curse_page_fabric,
+                "mcversion": minecraft_version, "fabric_version": fabric_version]
+}
+
 configurations {
     common
     shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
@@ -45,8 +50,7 @@ processResources {
     inputs.property "version", project.version
 
     filesMatching("fabric.mod.json") {
-        expand "version": project.version, "homepage": curse_page_fabric, 
-                "mcversion": minecraft_version, "fabric_version": fabric_version
+        expand mod_meta
     }
     exclude '.cache'
 }
