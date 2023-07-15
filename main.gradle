@@ -211,6 +211,11 @@ task buildUploadAll(group: "publishing") {
     upload.mustRunAfter publishAll
 }
 
+task buildToLocal(group: "publishing") {
+    dependsOn cleanAll, buildAll, ":common:publishToMavenLocal", ":fabric:publishToMavenLocal", ":forge:publishToMavenLocal"
+    buildAll.mustRunAfter cleanAll
+}
+
 afterEvaluate {
     task buildUploadFabric(group: "publishing") {
         dependsOn cleanAll, ":fabric:build", ":fabric:publish", "curseforge${curse_id_fabric}", "fabric:modrinth"
