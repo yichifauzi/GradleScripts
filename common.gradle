@@ -11,7 +11,7 @@ architectury {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact(remapJar) {
+            artifact(jar) {
                 classifier null
                 builtBy jar
             }
