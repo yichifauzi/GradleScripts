@@ -114,13 +114,15 @@ curseforge {
             changelogType = "markdown"
             releaseType = 'release'
         }
-        relations {
-            if (!"${project.curse_dep_fabric}".isEmpty()) {
+        if (!"${project.curse_dep_fabric}".isEmpty()) {
+            relations {
                 "${project.curse_dep_fabric}".split(', ').each {
                     requiredDependency "${it}"
                 }
             }
-            if(project.hasProperty("optional_curse_dep_fabric")) {
+        }
+        if (project.hasProperty("optional_curse_dep_fabric")) {
+            relations {
                 "${project.optional_curse_dep_fabric}".split(', ').each {
                     optionalDependency "${it}"
                 }
@@ -140,13 +142,15 @@ curseforge {
             changelogType = "markdown"
             releaseType = 'release'
         }
-        relations {
-            if (!"${project.curse_dep_forge}".isEmpty()) {
+        if (!"${project.curse_dep_forge}".isEmpty()) {
+            relations {
                 "${project.curse_dep_forge}".split(', ').each {
                     requiredDependency "${it}"
                 }
             }
-            if(project.hasProperty("optional_curse_dep_forge")) {
+        }
+        if (project.hasProperty("optional_curse_dep_forge")) {
+            relations {
                 "${project.optional_curse_dep_forge}".split(', ').each {
                     optionalDependency "${it}"
                 }
