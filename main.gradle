@@ -9,7 +9,7 @@ buildscript {
     }
 }
 
-apply from: "https://raw.githubusercontent.com/Flemmli97/GradleScripts/mc-architectury-1.2/changelog.gradle"
+apply from: "https://raw.githubusercontent.com/Flemmli97/GradleScripts/mc-architectury-v1/changelog.gradle"
 apply plugin: com.matthewprenger.cursegradle.CurseGradlePlugin
 
 import com.diluv.schoomp.Webhook
