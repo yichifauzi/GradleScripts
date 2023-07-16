@@ -12,6 +12,6 @@ ext.changelog = { int versions ->
         }
         return changelog + "\n\n"
     } catch (exception) {
-        return "${project.project_name} ${project.mod_version}\n==========\n"
+        return "${project.project_name} ${project.mod_version}\n==========\nThere was an error generating the changelog + ${exception}"
     }
 }
