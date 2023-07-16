@@ -1,4 +1,4 @@
-ext.changelog = { int version -> 
+ext.changelog = { int versions -> 
     try {
         def changelog = ""
         def match = 0
