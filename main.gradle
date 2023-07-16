@@ -114,17 +114,17 @@ curseforge {
             changelogType = "markdown"
             releaseType = 'release'
         }
-        if (!"${project.curse_dep_fabric}".isEmpty()) {
+        if (!"${project.curse_dep_fabric}".isEmpty() || project.hasProperty("optional_curse_dep_fabric")) {
             relations {
-                "${project.curse_dep_fabric}".split(', ').each {
-                    requiredDependency "${it}"
+                if (!"${project.curse_dep_fabric}".isEmpty()) {
+                    "${project.curse_dep_fabric}".split(', ').each {
+                        requiredDependency "${it}"
+                    }
                 }
-            }
-        }
-        if (project.hasProperty("optional_curse_dep_fabric")) {
-            relations {
-                "${project.optional_curse_dep_fabric}".split(', ').each {
-                    optionalDependency "${it}"
+                if (project.hasProperty("optional_curse_dep_fabric")) {
+                    "${project.optional_curse_dep_fabric}".split(', ').each {
+                        optionalDependency "${it}"
+                    }
                 }
             }
         }
@@ -142,17 +142,17 @@ curseforge {
             changelogType = "markdown"
             releaseType = 'release'
         }
-        if (!"${project.curse_dep_forge}".isEmpty()) {
+        if (!"${project.curse_dep_forge}".isEmpty() || project.hasProperty("optional_curse_dep_forge")) {
             relations {
-                "${project.curse_dep_forge}".split(', ').each {
-                    requiredDependency "${it}"
+                if (!"${project.curse_dep_forge}".isEmpty()) {
+                    "${project.curse_dep_forge}".split(', ').each {
+                        requiredDependency "${it}"
+                    }
                 }
-            }
-        }
-        if (project.hasProperty("optional_curse_dep_forge")) {
-            relations {
-                "${project.optional_curse_dep_forge}".split(', ').each {
-                    optionalDependency "${it}"
+                if (project.hasProperty("optional_curse_dep_forge")) {
+                    "${project.optional_curse_dep_forge}".split(', ').each {
+                        optionalDependency "${it}"
+                    }
                 }
             }
         }
