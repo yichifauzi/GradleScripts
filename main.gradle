@@ -79,16 +79,17 @@ task publishAll {
 
 //Splits the changelog into multiple parts if they get bigger than discords embed field size (1024)
 def discordChangelog() {
+    def limit = (1024 - 9)
     def changelog = ext.changelog(1)
     def res = new ArrayList()
-    if (changelog.size() < 1024) {
+    if (changelog.size() < limit) {
         res.add(changelog)
         return res;
     }
     def temp = ""
     changelog.split("\n").each {
         it = it + "\n"
-        if ((temp.size() + it.size()) >= 1024) {
+        if ((temp.size() + it.size()) >= limit) {
             res.add(temp)
             temp = it
         } else
