@@ -159,9 +159,9 @@ curseforge {
     }
 }
 
-task publishAll {
+task sendDiscordNotif {
     doLast {
-            discordNotif(true, true)
+        discordNotif(true, true)
     }
 }
 
