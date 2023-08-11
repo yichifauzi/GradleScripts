@@ -159,7 +159,14 @@ curseforge {
     }
 }
 
+task publishAll {
+    doLast {
+            discordNotif(true, true)
+    }
+}
+
 def discordNotif(fabric, forge) {
+    println 'Pushing to discord webhook'
     try {
         def webhook = new Webhook(findProperty('discordHook'), "${project.project_name} Upload")
 
@@ -200,7 +207,7 @@ def discordNotif(fabric, forge) {
     }
 
     catch (IOException e) {
-        println 'Failed to push to the Discord webhook.'
+        println 'Failed to push to the Discord webhook. ' + e
     }
 }
 
