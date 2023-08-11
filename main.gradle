@@ -159,12 +159,6 @@ curseforge {
     }
 }
 
-task sendDiscordNotif {
-    doLast {
-        discordNotif(true, true)
-    }
-}
-
 def discordNotif(fabric, forge) {
     println 'Pushing to discord webhook'
     try {
