@@ -9,7 +9,7 @@ buildscript {
     }
 }
 
-apply from: "https://raw.githubusercontent.com/Flemmli97/GradleScripts/mc-architectury-v1/changelog.gradle"
+apply from: "https://raw.githubusercontent.com/Flemmli97/GradleScripts/mc-architectury-fabric-neoforge/changelog.gradle"
 apply plugin: com.matthewprenger.cursegradle.CurseGradlePlugin
 
 import com.diluv.schoomp.Webhook
@@ -79,17 +79,16 @@ task publishAll {
 
 //Splits the changelog into multiple parts if they get bigger than discords embed field size (1024)
 def discordChangelog() {
-    def limit = (1024 - 9)
     def changelog = ext.changelog(1)
     def res = new ArrayList()
-    if (changelog.size() < limit) {
+    if (changelog.size() < 1024) {
         res.add(changelog)
         return res;
     }
     def temp = ""
     changelog.split("\n").each {
         it = it + "\n"
-        if ((temp.size() + it.size()) >= limit) {
+        if ((temp.size() + it.size()) >= 1024) {
             res.add(temp)
             temp = it
         } else
@@ -161,7 +160,6 @@ curseforge {
 }
 
 def discordNotif(fabric, forge) {
-    println 'Pushing to discord webhook'
     try {
         def webhook = new Webhook(findProperty('discordHook'), "${project.project_name} Upload")
 
@@ -202,7 +200,7 @@ def discordNotif(fabric, forge) {
     }
 
     catch (IOException e) {
-        println 'Failed to push to the Discord webhook. ' + e
+        println 'Failed to push to the Discord webhook.'
     }
 }
 
