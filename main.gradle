@@ -61,20 +61,20 @@ allprojects {
 
 task buildAll {
     dependsOn(":fabric:build")
-    dependsOn(":forge:build")
+    dependsOn(":neoforge:build")
 }
 
 task cleanAll {
     dependsOn clean
     dependsOn(":common:clean")
     dependsOn(":fabric:clean")
-    dependsOn(":forge:clean")
+    dependsOn(":neoforge:clean")
 }
 
 task publishAll {
     dependsOn(":common:publish")
     dependsOn(":fabric:publish")
-    dependsOn(":forge:publish")
+    dependsOn(":neoforge:publish")
 }
 
 //Splits the changelog into multiple parts if they get bigger than discords embed field size (1024)
@@ -134,8 +134,8 @@ curseforge {
         "${project.curse_versions}".split(', ').each {
             addGameVersion "${it}"
         }
-        addGameVersion "Forge"
-        mainArtifact(project(":forge").tasks.getByName('remapJar')) {
+        addGameVersion "NeoForge"
+        mainArtifact(project(":neoforge").tasks.getByName('remapJar')) {
             def txt = project.ext.changelog(1).replace("\n-", "\n\n- ")
             txt = txt + "\n\n" + "For past versions see: ${project.full_changelog}"
             changelog = txt
@@ -182,9 +182,9 @@ def discordNotif(fabric, forge) {
         }
         if(forge) {
             def fileIDForge = tasks.getByName("curseforge${project.curse_id_forge}").property('mainArtifact').fileID
-            embed.addField('Get the forge version here (When it is accepted)', "${project.findProperty('curse_page_forge')}/files/${fileIDForge}", false)
-            fileIDForge = project("forge").tasks.getByName("modrinth").property('uploadInfo').id
-            embed.addField('Modrinth version (forge)', "${project.findProperty('modrinth_page')}/version/${fileIDForge}", false)
+            embed.addField('Get the neoforge version here (When it is accepted)', "${project.findProperty('curse_page_forge')}/files/${fileIDForge}", false)
+            fileIDForge = project("neoforge").tasks.getByName("modrinth").property('uploadInfo').id
+            embed.addField('Modrinth version (neoforge)', "${project.findProperty('modrinth_page')}/version/${fileIDForge}", false)
         }
         def changelog = discordChangelog()
         if (changelog.size() == 1)
@@ -205,7 +205,7 @@ def discordNotif(fabric, forge) {
 }
 
 task upload(group: "publishing") {
-    dependsOn tasks.getByName("curseforge"), "fabric:modrinth", "forge:modrinth"
+    dependsOn tasks.getByName("curseforge"), "fabric:modrinth", "neoforge:modrinth"
 }
 
 tasks.upload.doLast {
@@ -219,7 +219,7 @@ task buildUploadAll(group: "publishing") {
 }
 
 task buildToLocal(group: "publishing") {
-    dependsOn cleanAll, buildAll, ":common:publishToMavenLocal", ":fabric:publishToMavenLocal", ":forge:publishToMavenLocal"
+    dependsOn cleanAll, buildAll, ":common:publishToMavenLocal", ":fabric:publishToMavenLocal", ":neoforge:publishToMavenLocal"
     buildAll.mustRunAfter cleanAll
 }
 
@@ -235,10 +235,10 @@ afterEvaluate {
     }
 
     task buildUploadForge(group: "publishing") {
-        dependsOn cleanAll, ":forge:build", ":forge:publish", "curseforge${curse_id_forge}", "forge:modrinth"
-        project("forge").build.mustRunAfter cleanAll
-        project("forge").publish.mustRunAfter ":forge:build"
-        tasks.findByName("curseforge${curse_id_forge}").mustRunAfter ":forge:publish"
+        dependsOn cleanAll, ":neoforge:build", ":neoforge:publish", "curseforge${curse_id_forge}", "neoforge:modrinth"
+        project("neoforge").build.mustRunAfter cleanAll
+        project("neoforge").publish.mustRunAfter ":neoforge:build"
+        tasks.findByName("curseforge${curse_id_forge}").mustRunAfter ":neoforge:publish"
         doLast {
             discordNotif(false, true)
         }
