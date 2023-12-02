@@ -23,13 +23,11 @@ architectury {
 }
 
 loom {
-    /*neoforge {
-        runs {
-            client {
-                vmArgs "-Dmixin.debug.export=true"
-            }
+    runs {
+        client {
+            vmArgs "-Dmixin.debug.export=true"
         }
-    }*/
+    }
 }
 
 ext {
