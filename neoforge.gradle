@@ -31,7 +31,7 @@ loom {
 }
 
 ext {
-    mod_meta = ["version": project.version, "loader_version": loader_version, "homepage": curse_page_forge, 
+    mod_meta = ["version": project.version, "loader_version": loader_version, "homepage": curse_page_forge,
                 "mcversion": minecraft_version, "forge_version": neoforge_version]
 }
 
@@ -41,6 +41,10 @@ configurations {
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentNeoForge.extendsFrom common
+}
+
+repositories {
+    maven { url "https://maven.neoforged.net/releases/" }
 }
 
 dependencies {
