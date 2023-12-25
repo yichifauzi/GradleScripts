@@ -143,7 +143,7 @@ def discordNotif(fabric, forge) {
 }
 
 task upload(group: "publishing") {
-    dependsOn tasks.getByName("curseforge"), "fabric:modrinth", "neoforge:modrinth"
+    dependsOn "fabric:curseforge", "neoforge:curseforge", "fabric:modrinth", "neoforge:modrinth"
 }
 
 tasks.upload.doLast {
@@ -163,25 +163,24 @@ task buildToLocal(group: "publishing") {
 
 afterEvaluate {
     task buildUploadFabric(group: "publishing") {
-        dependsOn cleanAll, ":fabric:build", ":fabric:publish", "curseforge${curse_id_fabric}", "fabric:modrinth"
+        dependsOn cleanAll, ":fabric:build", ":fabric:publish", "fabric:curseforge", "fabric:modrinth"
         project("fabric").build.mustRunAfter cleanAll
         project("fabric").publish.mustRunAfter ":fabric:build"
-        tasks.findByName("curseforge${curse_id_fabric}").mustRunAfter ":fabric:publish"
+        project("fabric").curseforge.mustRunAfter ":fabric:publish"
         doLast {
             discordNotif(true, false)
         }
     }
 
     task buildUploadForge(group: "publishing") {
-        dependsOn cleanAll, ":neoforge:build", ":neoforge:publish", "curseforge${curse_id_forge}", "neoforge:modrinth"
+        dependsOn cleanAll, ":neoforge:build", ":neoforge:publish", "neoforge:curseforge", "neoforge:modrinth"
         project("neoforge").build.mustRunAfter cleanAll
         project("neoforge").publish.mustRunAfter ":neoforge:build"
-        tasks.findByName("curseforge${curse_id_forge}").mustRunAfter ":neoforge:publish"
+        project("neoforge").curseforge.mustRunAfter ":neoforge:publish"
         doLast {
             discordNotif(false, true)
         }
     }
 }
 
-tasks.getByName("curseforge").dependsOn buildAll
 publishAll.dependsOn buildAll
