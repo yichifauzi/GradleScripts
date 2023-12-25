@@ -15,8 +15,8 @@ buildscript {
 
 apply plugin: com.modrinth.minotaur.Minotaur
 apply plugin: com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
-apply from: "https://raw.githubusercontent.com/Flemmli97/GradleScripts/mc-architectury-fabric-neoforge/changelog.gradle"
 apply plugin: com.matthewprenger.cursegradle.CurseGradlePlugin
+apply from: "https://raw.githubusercontent.com/Flemmli97/GradleScripts/mc-architectury-fabric-neoforge/changelog.gradle"
 
 architectury {
     platformSetupLoomIde()

@@ -166,7 +166,7 @@ afterEvaluate {
         dependsOn cleanAll, ":fabric:build", ":fabric:publish", "fabric:curseforge", "fabric:modrinth"
         project("fabric").build.mustRunAfter cleanAll
         project("fabric").publish.mustRunAfter ":fabric:build"
-        tasks.findByName("fabric:curseforge").mustRunAfter ":fabric:publish"
+        tasks.findByName(":fabric:curseforge").mustRunAfter ":fabric:publish"
         doLast {
             discordNotif(true, false)
         }
@@ -176,7 +176,7 @@ afterEvaluate {
         dependsOn cleanAll, ":neoforge:build", ":neoforge:publish", "neoforge:curseforge", "neoforge:modrinth"
         project("neoforge").build.mustRunAfter cleanAll
         project("neoforge").publish.mustRunAfter ":neoforge:build"
-        tasks.findByName("neoforge:curseforge").mustRunAfter ":neoforge:publish"
+        tasks.findByName(":neoforge:curseforge").mustRunAfter ":neoforge:publish"
         doLast {
             discordNotif(false, true)
         }
