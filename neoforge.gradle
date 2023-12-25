@@ -16,6 +16,7 @@ buildscript {
 apply plugin: com.modrinth.minotaur.Minotaur
 apply plugin: com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 apply from: "https://raw.githubusercontent.com/Flemmli97/GradleScripts/mc-architectury-fabric-neoforge/changelog.gradle"
+apply plugin: com.matthewprenger.cursegradle.CurseGradlePlugin
 
 architectury {
     platformSetupLoomIde()
@@ -93,6 +94,40 @@ components.java {
         skip()
     }
 }
+
+curseforge {
+    apiKey = findProperty('curseApiToken') ?: 0
+
+    project {
+        id = "${curse_id_forge}"
+        "${project.curse_versions}".split(', ').each {
+            addGameVersion "${it}"
+        }
+        addGameVersion "NeoForge"
+        mainArtifact(remapJar) {
+            def txt = project.ext.changelog(1).replace("\n-", "\n\n- ")
+            txt = txt + "\n\n" + "For past versions see: ${project.full_changelog}"
+            changelog = txt
+            changelogType = "markdown"
+            releaseType = 'release'
+        }
+        if (!"${project.curse_dep_forge}".isEmpty() || project.hasProperty("optional_curse_dep_forge")) {
+            relations {
+                if (!"${project.curse_dep_forge}".isEmpty()) {
+                    "${project.curse_dep_forge}".split(', ').each {
+                        requiredDependency "${it}"
+                    }
+                }
+                if (project.hasProperty("optional_curse_dep_forge")) {
+                    "${project.optional_curse_dep_forge}".split(', ').each {
+                        optionalDependency "${it}"
+                    }
+                }
+            }
+        }
+    }
+}
+tasks.getByName("curseforge").mustRunAfter build
 
 modrinth {
     token = findProperty('modrinthApiToken') ?: 0

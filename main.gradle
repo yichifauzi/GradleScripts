@@ -10,7 +10,6 @@ buildscript {
 }
 
 apply from: "https://raw.githubusercontent.com/Flemmli97/GradleScripts/mc-architectury-fabric-neoforge/changelog.gradle"
-apply plugin: com.matthewprenger.cursegradle.CurseGradlePlugin
 
 import com.diluv.schoomp.Webhook
 import com.diluv.schoomp.message.Message
@@ -98,67 +97,6 @@ def discordChangelog() {
     return res
 }
 
-curseforge {
-    apiKey = findProperty('curseApiToken') ?: 0
-
-    project {
-        id = "${curse_id_fabric}"
-        "${project.curse_versions}".split(', ').each {
-            addGameVersion "${it}"
-        }
-        addGameVersion "Fabric"
-        mainArtifact(project(":fabric").tasks.getByName('remapJar')) {
-            def txt = project.ext.changelog(1).replace("\n-", "\n\n- ")
-            txt = txt + "\n\n" + "For past versions see: ${project.full_changelog}"
-            changelog = txt
-            changelogType = "markdown"
-            releaseType = 'release'
-        }
-        if (!"${project.curse_dep_fabric}".isEmpty() || project.hasProperty("optional_curse_dep_fabric")) {
-            relations {
-                if (!"${project.curse_dep_fabric}".isEmpty()) {
-                    "${project.curse_dep_fabric}".split(', ').each {
-                        requiredDependency "${it}"
-                    }
-                }
-                if (project.hasProperty("optional_curse_dep_fabric")) {
-                    "${project.optional_curse_dep_fabric}".split(', ').each {
-                        optionalDependency "${it}"
-                    }
-                }
-            }
-        }
-    }
-    project {
-        id = "${curse_id_forge}"
-        "${project.curse_versions}".split(', ').each {
-            addGameVersion "${it}"
-        }
-        addGameVersion "NeoForge"
-        mainArtifact(project(":neoforge").tasks.getByName('remapJar')) {
-            def txt = project.ext.changelog(1).replace("\n-", "\n\n- ")
-            txt = txt + "\n\n" + "For past versions see: ${project.full_changelog}"
-            changelog = txt
-            changelogType = "markdown"
-            releaseType = 'release'
-        }
-        if (!"${project.curse_dep_forge}".isEmpty() || project.hasProperty("optional_curse_dep_forge")) {
-            relations {
-                if (!"${project.curse_dep_forge}".isEmpty()) {
-                    "${project.curse_dep_forge}".split(', ').each {
-                        requiredDependency "${it}"
-                    }
-                }
-                if (project.hasProperty("optional_curse_dep_forge")) {
-                    "${project.optional_curse_dep_forge}".split(', ').each {
-                        optionalDependency "${it}"
-                    }
-                }
-            }
-        }
-    }
-}
-
 def discordNotif(fabric, forge) {
     try {
         def webhook = new Webhook(findProperty('discordHook'), "${project.project_name} Upload")
@@ -175,13 +113,13 @@ def discordNotif(fabric, forge) {
         def embed = new Embed()
 
         if(fabric) {
-            def fileIDFabric = tasks.getByName("curseforge${project.curse_id_fabric}").property('mainArtifact').fileID
+            def fileIDFabric = project("fabric").tasks.getByName("curseforge").property('mainArtifact').fileID
             embed.addField('Get the fabric version here (When it is accepted)', "${project.findProperty('curse_page_fabric')}/files/${fileIDFabric}", false)
             fileIDFabric = project("fabric").tasks.getByName("modrinth").property('uploadInfo').id
             embed.addField('Modrinth version (fabric)', "${project.findProperty('modrinth_page')}/version/${fileIDFabric}", false)
         }
         if(forge) {
-            def fileIDForge = tasks.getByName("curseforge${project.curse_id_forge}").property('mainArtifact').fileID
+            def fileIDForge = project("neoforge").tasks.getByName("curseforge").property('mainArtifact').fileID
             embed.addField('Get the neoforge version here (When it is accepted)', "${project.findProperty('curse_page_forge')}/files/${fileIDForge}", false)
             fileIDForge = project("neoforge").tasks.getByName("modrinth").property('uploadInfo').id
             embed.addField('Modrinth version (neoforge)', "${project.findProperty('modrinth_page')}/version/${fileIDForge}", false)
