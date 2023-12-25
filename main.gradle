@@ -112,13 +112,13 @@ def discordNotif(fabric, forge) {
         def embed = new Embed()
 
         if(fabric) {
-            def fileIDFabric = project("fabric").tasks.getByName("curseforge").property('mainArtifact').fileID
+            def fileIDFabric = project("fabric").tasks.getByName("curseforge${project.curse_id_fabric}").property('mainArtifact').fileID
             embed.addField('Get the fabric version here (When it is accepted)', "${project.findProperty('curse_page_fabric')}/files/${fileIDFabric}", false)
             fileIDFabric = project("fabric").tasks.getByName("modrinth").property('uploadInfo').id
             embed.addField('Modrinth version (fabric)', "${project.findProperty('modrinth_page')}/version/${fileIDFabric}", false)
         }
         if(forge) {
-            def fileIDForge = project("neoforge").tasks.getByName("curseforge").property('mainArtifact').fileID
+            def fileIDForge = project("neoforge").tasks.getByName("curseforge${project.curse_id_forge}").property('mainArtifact').fileID
             embed.addField('Get the neoforge version here (When it is accepted)', "${project.findProperty('curse_page_forge')}/files/${fileIDForge}", false)
             fileIDForge = project("neoforge").tasks.getByName("modrinth").property('uploadInfo').id
             embed.addField('Modrinth version (neoforge)', "${project.findProperty('modrinth_page')}/version/${fileIDForge}", false)
