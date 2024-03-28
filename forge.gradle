@@ -93,7 +93,7 @@ components.java {
 }
 
 modrinth {
-    token = findProperty('modrinthApiToken') ?: 0
+    token = findProperty('modrinthApiToken') ?: '0'
     projectId = "${modrinth_id}"
     versionNumber = version
     versionName = remapJar.archiveFileName
