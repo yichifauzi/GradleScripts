@@ -97,7 +97,7 @@ components.java {
 }
 
 curseforge {
-    apiKey = findProperty('curseApiToken') ?: 0
+    apiKey = findProperty('curseApiToken') ?: '0'
 
     project {
         id = "${curse_id_forge}"
