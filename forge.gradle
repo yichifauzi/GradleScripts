@@ -35,7 +35,7 @@ loom {
 }
 
 ext {
-    mod_meta = ["version": project.version, "loader_version": loader_version, "homepage": curse_page_forge, 
+    mod_meta = ["version": project.version, "loader_version": forge_loader_version, "homepage": curse_page_forge, 
                 "mcversion": minecraft_version, "forge_version": forge_version]
 }
 

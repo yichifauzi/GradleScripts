@@ -33,7 +33,7 @@ loom {
 }
 
 ext {
-    mod_meta = ["version": project.version, "loader_version": loader_version, "homepage": curse_page_forge,
+    mod_meta = ["version": project.version, "loader_version": neo_loader_version, "homepage": curse_page_forge,
                 "mcversion": minecraft_version, "forge_version": neoforge_version]
 }
 
@@ -60,7 +60,7 @@ processResources {
     inputs.property "version", project.version
 
     def loader_version = (neoforge_version =~ /([0-9]+)\.([0-9]+)\.([0-9]+)/)[0][1]
-    filesMatching("META-INF/mods.toml") {
+    filesMatching("META-INF/neoforge.mods.toml") {
         expand mod_meta
     }
     exclude '.cache'
