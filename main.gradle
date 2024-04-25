@@ -49,7 +49,7 @@ allprojects {
 
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
-        options.release = 17
+        options.release = project.hasProperty('jvm') ? rootProject.jvm : 21
     }
 
     java {
