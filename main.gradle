@@ -170,7 +170,7 @@ afterEvaluate {
         }
     }
 
-    task buildUploadForge(group: "publishing") {
+    task buildUploadNeoForge(group: "publishing") {
         dependsOn cleanAll, ":neoforge:build", ":neoforge:publish", "neoforge:curseforge", "neoforge:modrinth"
         project("neoforge").build.mustRunAfter cleanAll
         project("neoforge").publish.mustRunAfter ":neoforge:build"
